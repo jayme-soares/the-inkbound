@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap");
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Tema é alternado manualmente (useTemaStore), não pelo prefers-color-scheme
+   do sistema — então o variant `dark:` precisa responder à classe .dark. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", serif;
+
+  --color-paper: oklch(0.97 0.005 90);
+  --color-paper-2: oklch(0.99 0.003 90);
+  --color-line: oklch(0.9 0.005 90);
+  --color-ink: oklch(0.2 0.01 90);
+  --color-ink-muted: oklch(0.5 0.01 90);
+  --color-hover: oklch(0.93 0.005 90);
+  --color-gold: oklch(0.42 0.1 85);
+  --color-gold-fg: oklch(0.99 0.003 90);
+  --color-danger: oklch(0.5 0.19 25);
+  --color-danger-surface: oklch(0.96 0.03 25);
+  --color-danger-line: oklch(0.85 0.08 25);
+}
+
+.dark {
+  --color-paper: #121114;
+  --color-paper-2: oklch(0.23 0.005 285);
+  --color-line: oklch(0.32 0.005 285);
+  --color-ink: oklch(0.96 0.01 90);
+  --color-ink-muted: oklch(0.62 0.01 90);
+  --color-hover: oklch(0.27 0.005 285);
+  --color-gold: oklch(0.78 0.13 85);
+  --color-gold-fg: #121114;
+  --color-danger: oklch(0.7 0.15 25);
+  --color-danger-surface: oklch(0.28 0.08 25);
+  --color-danger-line: oklch(0.4 0.1 25);
+}
+
+body {
+  font-family: var(--font-sans);
+}

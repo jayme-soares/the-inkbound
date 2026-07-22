@@ -1,0 +1,103 @@
+{
+  "app": {
+    "wordmark": "The Inkbound"
+  },
+  "tema": {
+    "paraClaro": "Switch to light theme",
+    "paraEscuro": "Switch to dark theme"
+  },
+  "idioma": {
+    "trocarPara": "Mudar para português"
+  },
+  "carregamento": {
+    "frases": [
+      "Dipping the quill in ink...",
+      "Sharpening the nib...",
+      "Uncorking the inkwell...",
+      "Smoothing out the parchment...",
+      "Chasing down stray commas...",
+      "Waking up the muse...",
+      "Dusting off old drafts...",
+      "Aligning the margins...",
+      "Consulting the thesaurus...",
+      "Finding the right words..."
+    ]
+  },
+  "dashboard": {
+    "verificandoDrive": "Checking Drive for new projects...",
+    "novoProjeto": "New project",
+    "buscarPlaceholder": "Search projects...",
+    "erroDisco": "Failed to access disk",
+    "erroDrive": "Failed to check projects on Drive",
+    "carregandoProjetos": "Loading projects...",
+    "nenhumProjetoAinda": "No projects yet. Create the first one.",
+    "nenhumProjetoEncontrado": "No projects found.",
+    "semGenero": "No genre",
+    "palavras": "words"
+  },
+  "novoProjetoModal": {
+    "titulo": "New project",
+    "campoTitulo": "Title",
+    "campoGenero": "Genre",
+    "erroCriar": "Failed to create project",
+    "criando": "Creating...",
+    "criar": "Create"
+  },
+  "contaGoogle": {
+    "cliqueDesconectar": "Click to disconnect",
+    "conectadoAoDrive": "Connected to Drive",
+    "conectando": "Connecting...",
+    "conectarAoDrive": "Connect to Google Drive"
+  },
+  "workspace": {
+    "projetos": "Projects",
+    "abaEscrita": "Writing",
+    "abaFichas": "Sheets",
+    "selecioneArquivo": "Select a file in the sidebar to start writing."
+  },
+  "sidebar": {
+    "novaPasta": "New folder",
+    "novoArquivo": "New file",
+    "excluir": "Delete",
+    "carregando": "Loading...",
+    "placeholderPasta": "folder-name",
+    "placeholderArquivo": "file.md"
+  },
+  "editor": {
+    "carregando": "Loading...",
+    "palavras": "words",
+    "salvando": "saving...",
+    "preview": "Preview",
+    "focus": "Focus"
+  },
+  "fichas": {
+    "personagens": "Characters",
+    "localidades": "Locations",
+    "novo": "New",
+    "carregando": "Loading...",
+    "nenhumAinda": "No {{tipo}} yet.",
+    "salvando": "Saving...",
+    "salvar": "Save",
+    "cancelar": "Cancel",
+    "campos": {
+      "nome": "Name",
+      "motivacoes": "Motivations",
+      "arcoNarrativo": "Character arc",
+      "descricao": "Description"
+    }
+  },
+  "sincronizacao": {
+    "conecteNoDashboard": "Connect to Google Drive on the Dashboard to sync",
+    "driveDesconectado": "Drive disconnected",
+    "conflitosTitle": "Edited on both sides since the last sync: {{lista}}",
+    "conflitos": "{{count}} conflict(s)",
+    "resumo": "{{enviados}} sent, {{baixados}} downloaded, {{excluidos}} deleted",
+    "ultimaSincronizacao": "Last synced: {{tempo}}",
+    "sincronizando": "Syncing...",
+    "sincronizar": "Sync",
+    "agoraMesmo": "just now",
+    "haMinutos": "{{n}} min ago",
+    "haHoras": "{{n}}h ago",
+    "haDias": "{{n}}d ago"
+  }
+}

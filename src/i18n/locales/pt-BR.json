@@ -1,0 +1,103 @@
+{
+  "app": {
+    "wordmark": "The Inkbound"
+  },
+  "tema": {
+    "paraClaro": "Mudar para tema claro",
+    "paraEscuro": "Mudar para tema escuro"
+  },
+  "idioma": {
+    "trocarPara": "Switch to English"
+  },
+  "carregamento": {
+    "frases": [
+      "Molhando a pena no tinteiro...",
+      "Amolando a ponta da pena...",
+      "Destampando o tinteiro...",
+      "Alisando o pergaminho...",
+      "Caçando vírgulas perdidas...",
+      "Acordando a musa...",
+      "Tirando o pó de rascunhos antigos...",
+      "Alinhando as margens...",
+      "Consultando o dicionário de sinônimos...",
+      "Encontrando as palavras certas..."
+    ]
+  },
+  "dashboard": {
+    "verificandoDrive": "Verificando Drive por novos projetos...",
+    "novoProjeto": "Novo projeto",
+    "buscarPlaceholder": "Buscar projetos...",
+    "erroDisco": "Falha ao acessar o disco",
+    "erroDrive": "Falha ao verificar projetos no Drive",
+    "carregandoProjetos": "Carregando projetos...",
+    "nenhumProjetoAinda": "Nenhum projeto ainda. Crie o primeiro.",
+    "nenhumProjetoEncontrado": "Nenhum projeto encontrado.",
+    "semGenero": "Sem gênero",
+    "palavras": "palavras"
+  },
+  "novoProjetoModal": {
+    "titulo": "Novo projeto",
+    "campoTitulo": "Título",
+    "campoGenero": "Gênero",
+    "erroCriar": "Falha ao criar projeto",
+    "criando": "Criando...",
+    "criar": "Criar"
+  },
+  "contaGoogle": {
+    "cliqueDesconectar": "Clique para desconectar",
+    "conectadoAoDrive": "Conectado ao Drive",
+    "conectando": "Conectando...",
+    "conectarAoDrive": "Conectar ao Google Drive"
+  },
+  "workspace": {
+    "projetos": "Projetos",
+    "abaEscrita": "Escrita",
+    "abaFichas": "Fichas",
+    "selecioneArquivo": "Selecione um arquivo na barra lateral para começar a escrever."
+  },
+  "sidebar": {
+    "novaPasta": "Nova pasta",
+    "novoArquivo": "Novo arquivo",
+    "excluir": "Excluir",
+    "carregando": "Carregando...",
+    "placeholderPasta": "nome-da-pasta",
+    "placeholderArquivo": "arquivo.md"
+  },
+  "editor": {
+    "carregando": "Carregando...",
+    "palavras": "palavras",
+    "salvando": "salvando...",
+    "preview": "Preview",
+    "focus": "Focus"
+  },
+  "fichas": {
+    "personagens": "Personagens",
+    "localidades": "Localidades",
+    "novo": "Novo",
+    "carregando": "Carregando...",
+    "nenhumAinda": "Nenhum(a) {{tipo}} ainda.",
+    "salvando": "Salvando...",
+    "salvar": "Salvar",
+    "cancelar": "Cancelar",
+    "campos": {
+      "nome": "Nome",
+      "motivacoes": "Motivações",
+      "arcoNarrativo": "Arco narrativo",
+      "descricao": "Descrição"
+    }
+  },
+  "sincronizacao": {
+    "conecteNoDashboard": "Conecte-se ao Google Drive no Dashboard para sincronizar",
+    "driveDesconectado": "Drive desconectado",
+    "conflitosTitle": "Editado nos dois lados desde o último sync: {{lista}}",
+    "conflitos": "{{count}} conflito(s)",
+    "resumo": "{{enviados}} enviado(s), {{baixados}} baixado(s), {{excluidos}} excluído(s)",
+    "ultimaSincronizacao": "Última sincronização: {{tempo}}",
+    "sincronizando": "Sincronizando...",
+    "sincronizar": "Sincronizar",
+    "agoraMesmo": "agora mesmo",
+    "haMinutos": "há {{n}} min",
+    "haHoras": "há {{n}}h",
+    "haDias": "há {{n}}d"
+  }
+}
