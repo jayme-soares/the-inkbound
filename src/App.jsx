@@ -22,9 +22,14 @@ function App() {
     Promise.all([carregarProjetos(), tempoMinimo]).finally(() => setPronto(true));
 
     if (useConfiguracoesStore.getState().telaCheiaAoIniciar) {
+      // setFullscreen(true) é o modo "kiosk" do SO: some com a barra de
+      // título inteira, inclusive os botões de minimizar/redimensionar/
+      // fechar, sem nenhuma forma de acioná-los pelo teclado no Windows.
+      // setMaximized preenche a tela igual, mas mantém a barra de título
+      // nativa (e seus botões) no lugar.
       getCurrentWindow()
-        .setFullscreen(true)
-        .catch((e) => console.error("Falha ao iniciar em tela cheia:", e));
+        .maximize()
+        .catch((e) => console.error("Falha ao iniciar maximizado:", e));
     }
 
     // Melhor esforço, em segundo plano — não deve atrasar o carregamento

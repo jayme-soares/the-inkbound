@@ -32,6 +32,7 @@ export async function listarProjetos() {
       contato: linha.contato,
       dataCriacao: linha.data_criacao,
       contagemPalavras: linha.contagem_palavras,
+      metaDiariaPalavras: linha.meta_diaria_palavras,
       caminho: caminhoProjeto,
     });
   }
@@ -68,6 +69,7 @@ export async function criarProjetoNoDisco({ titulo, genero }) {
       contato: null,
       dataCriacao,
       contagemPalavras: 0,
+      metaDiariaPalavras: null,
       caminho: caminhoProjeto,
     };
   } catch (erro) {

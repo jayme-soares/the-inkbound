@@ -78,4 +78,15 @@ export const useAppStore = create((set, get) => ({
           ? { ...state.projetoAtivo, contagemPalavras }
           : state.projetoAtivo,
     })),
+
+  atualizarMetaDiariaPalavras: (id, metaDiariaPalavras) =>
+    set((state) => ({
+      projetos: state.projetos.map((p) =>
+        p.id === id ? { ...p, metaDiariaPalavras } : p,
+      ),
+      projetoAtivo:
+        state.projetoAtivo?.id === id
+          ? { ...state.projetoAtivo, metaDiariaPalavras }
+          : state.projetoAtivo,
+    })),
 }));

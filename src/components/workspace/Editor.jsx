@@ -8,10 +8,14 @@ import {
   Italic,
   Maximize2,
   Minimize2,
+  Minus,
+  Plus,
   SeparatorHorizontal,
+  Type,
   Underline,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { FONTES_EDITOR, useConfiguracoesStore } from "../../store/useConfiguracoesStore";
 import { lerDocumento, escreverDocumentoAtomico } from "../../lib/documentos";
 import { contarCaracteres, contarPalavras } from "../../lib/palavras";
 import { caminhoRelativoDoArquivo, talvezCriarVersaoAutomatica } from "../../lib/versoes";
@@ -29,6 +33,8 @@ const BOTOES_FORMATACAO = [
   { chave: "sublinhado", Icone: Underline, prefixo: "<u>", sufixo: "</u>" },
 ];
 
+const OPCOES_FONTE = Object.keys(FONTES_EDITOR);
+
 export default function Editor({ projeto, caminhoArquivo, onSalvo, focusMode, onAlternarFocusMode }) {
   const { t } = useTranslation();
   const [conteudo, setConteudo] = useState("");
@@ -37,6 +43,13 @@ export default function Editor({ projeto, caminhoArquivo, onSalvo, focusMode, on
   const [erro, setErro] = useState(null);
   const [mostrarPreview, setMostrarPreview] = useState(true);
   const [historicoAberto, setHistoricoAberto] = useState(false);
+  const [menuFonteAberto, setMenuFonteAberto] = useState(false);
+
+  const fonteEditor = useConfiguracoesStore((s) => s.fonteEditor);
+  const definirFonteEditor = useConfiguracoesStore((s) => s.definirFonteEditor);
+  const tamanhoFonteEditor = useConfiguracoesStore((s) => s.tamanhoFonteEditor);
+  const ajustarTamanhoFonteEditor = useConfiguracoesStore((s) => s.ajustarTamanhoFonteEditor);
+  const estiloFonte = { fontFamily: FONTES_EDITOR[fonteEditor], fontSize: `${tamanhoFonteEditor}px` };
 
   const caminhoRelativo = caminhoRelativoDoArquivo(projeto.caminho, caminhoArquivo);
 
@@ -205,6 +218,56 @@ export default function Editor({ projeto, caminhoArquivo, onSalvo, focusMode, on
           >
             <SeparatorHorizontal size={14} />
           </button>
+
+          <div className="ml-1 flex items-center gap-0.5 border-l border-line pl-2">
+            <div className="relative">
+              <button
+                onClick={() => setMenuFonteAberto((v) => !v)}
+                title={t("editor.fonteEditor")}
+                className="rounded p-1.5 text-ink-muted hover:bg-hover hover:text-ink"
+              >
+                <Type size={14} />
+              </button>
+              {menuFonteAberto && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setMenuFonteAberto(false)} />
+                  <div className="absolute left-0 top-full z-50 mt-1 w-36 overflow-hidden rounded-lg border border-line bg-paper-2 shadow-lg">
+                    {OPCOES_FONTE.map((chave) => (
+                      <button
+                        key={chave}
+                        onClick={() => {
+                          definirFonteEditor(chave);
+                          setMenuFonteAberto(false);
+                        }}
+                        style={{ fontFamily: FONTES_EDITOR[chave] }}
+                        className={`block w-full px-3 py-1.5 text-left text-xs ${
+                          fonteEditor === chave ? "bg-gold text-gold-fg" : "text-ink hover:bg-hover"
+                        }`}
+                      >
+                        {t(`editor.fontes.${chave}`)}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+            <button
+              onClick={() => ajustarTamanhoFonteEditor(-1)}
+              title={t("editor.tamanhoFonte")}
+              className="rounded p-1 text-ink-muted hover:bg-hover hover:text-ink"
+            >
+              <Minus size={12} />
+            </button>
+            <span className="w-5 text-center text-[11px] text-ink-muted">{tamanhoFonteEditor}</span>
+            <button
+              onClick={() => ajustarTamanhoFonteEditor(1)}
+              title={t("editor.tamanhoFonte")}
+              className="rounded p-1 text-ink-muted hover:bg-hover hover:text-ink"
+            >
+              <Plus size={12} />
+            </button>
+          </div>
+
           <button
             onClick={() => setHistoricoAberto(true)}
             title={t("historico.titulo")}
@@ -221,7 +284,8 @@ export default function Editor({ projeto, caminhoArquivo, onSalvo, focusMode, on
           value={conteudo}
           onChange={(e) => handleChange(e.target.value)}
           spellCheck={false}
-          className={`h-full resize-none bg-paper p-6 text-sm leading-relaxed text-ink outline-none ${
+          style={estiloFonte}
+          className={`h-full resize-none bg-paper p-6 leading-relaxed text-ink outline-none ${
             focusMode
               ? "w-full max-w-2xl"
               : mostrarPreview
@@ -231,7 +295,8 @@ export default function Editor({ projeto, caminhoArquivo, onSalvo, focusMode, on
         />
         {mostrarPreview && !focusMode && (
           <div
-            className="prose prose-sm dark:prose-invert w-1/2 max-w-none overflow-y-auto bg-paper p-6"
+            style={estiloFonte}
+            className="prose dark:prose-invert w-1/2 max-w-none overflow-y-auto bg-paper p-6"
             dangerouslySetInnerHTML={{ __html: html }}
           />
         )}

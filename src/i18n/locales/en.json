@@ -74,7 +74,14 @@
     "italico": "Italic",
     "sublinhado": "Underline",
     "quebraCena": "Scene break",
-    "textoPadrao": "text"
+    "textoPadrao": "text",
+    "fonteEditor": "Font",
+    "fontes": {
+      "sans": "Sans-serif",
+      "serif": "Serif",
+      "mono": "Monospace"
+    },
+    "tamanhoFonte": "Size"
   },
   "fichas": {
     "personagens": "Characters",
@@ -130,6 +137,14 @@
     "exportando": "Exporting...",
     "exportarPdf": "Export PDF",
     "exportarDocx": "Export Word"
+  },
+  "metas": {
+    "titulo": "Writing goal",
+    "definir": "Set goal",
+    "metaDiaria": "Daily word goal",
+    "progresso": "{{atual}} of {{meta}} words today",
+    "salvar": "Save",
+    "salvando": "Saving..."
   },
   "configuracoes": {
     "titulo": "Settings",

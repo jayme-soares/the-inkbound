@@ -74,7 +74,14 @@
     "italico": "Itálico",
     "sublinhado": "Sublinhado",
     "quebraCena": "Quebra de cena",
-    "textoPadrao": "texto"
+    "textoPadrao": "texto",
+    "fonteEditor": "Fonte",
+    "fontes": {
+      "sans": "Sem serifa",
+      "serif": "Serifa",
+      "mono": "Monoespaçada"
+    },
+    "tamanhoFonte": "Tamanho"
   },
   "fichas": {
     "personagens": "Personagens",
@@ -130,6 +137,14 @@
     "exportando": "Exportando...",
     "exportarPdf": "Exportar PDF",
     "exportarDocx": "Exportar Word"
+  },
+  "metas": {
+    "titulo": "Meta de escrita",
+    "definir": "Definir meta",
+    "metaDiaria": "Meta diária de palavras",
+    "progresso": "{{atual}} de {{meta}} palavras hoje",
+    "salvar": "Salvar",
+    "salvando": "Salvando..."
   },
   "configuracoes": {
     "titulo": "Configurações",

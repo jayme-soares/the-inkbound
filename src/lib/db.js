@@ -8,7 +8,8 @@ const SCHEMA = [
     autor TEXT,
     contato TEXT,
     data_criacao TEXT NOT NULL,
-    contagem_palavras INTEGER NOT NULL DEFAULT 0
+    contagem_palavras INTEGER NOT NULL DEFAULT 0,
+    meta_diaria_palavras INTEGER
   )`,
   `CREATE TABLE IF NOT EXISTS personagens (
     id TEXT PRIMARY KEY,
@@ -45,6 +46,10 @@ const SCHEMA = [
     criado_em TEXT NOT NULL
   )`,
   `CREATE INDEX IF NOT EXISTS idx_versoes_caminho ON versoes_documento(caminho_relativo)`,
+  `CREATE TABLE IF NOT EXISTS progresso_diario (
+    data TEXT PRIMARY KEY,
+    palavras_inicio_dia INTEGER NOT NULL
+  )`,
 ];
 
 // Colunas adicionadas a tabelas já existentes depois do lançamento inicial.
@@ -55,6 +60,11 @@ const SCHEMA = [
 const MIGRACOES_COLUNA = [
   { tabela: "projeto", coluna: "autor", ddl: "ALTER TABLE projeto ADD COLUMN autor TEXT" },
   { tabela: "projeto", coluna: "contato", ddl: "ALTER TABLE projeto ADD COLUMN contato TEXT" },
+  {
+    tabela: "projeto",
+    coluna: "meta_diaria_palavras",
+    ddl: "ALTER TABLE projeto ADD COLUMN meta_diaria_palavras INTEGER",
+  },
 ];
 
 async function aplicarMigracoesColuna(db) {

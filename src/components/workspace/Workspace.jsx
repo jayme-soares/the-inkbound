@@ -12,6 +12,7 @@ import Editor from "./Editor";
 import Fichas from "./Fichas";
 import ExportarManuscrito from "./ExportarManuscrito";
 import SincronizacaoDrive from "./SincronizacaoDrive";
+import MetaEscrita from "./MetaEscrita";
 
 export default function Workspace() {
   const { t } = useTranslation();
@@ -66,6 +67,7 @@ export default function Workspace() {
             <h1 className="text-sm font-medium text-ink">{projetoAtivo.titulo}</h1>
 
             <div className="ml-auto flex items-center gap-4">
+              <MetaEscrita projeto={projetoAtivo} />
               <SincronizacaoDrive
                 conectado={sincronizacao.conectado}
                 sincronizando={sincronizacao.sincronizando}
