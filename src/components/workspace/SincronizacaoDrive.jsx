@@ -1,16 +1,6 @@
 import { RefreshCw, CloudOff, AlertTriangle } from "lucide-react";
 import { useTranslation } from "react-i18next";
-
-function formatarRelativo(iso, t) {
-  const diffMs = Date.now() - new Date(iso).getTime();
-  const minutos = Math.round(diffMs / 60000);
-  if (minutos < 1) return t("sincronizacao.agoraMesmo");
-  if (minutos < 60) return t("sincronizacao.haMinutos", { n: minutos });
-  const horas = Math.round(minutos / 60);
-  if (horas < 24) return t("sincronizacao.haHoras", { n: horas });
-  const dias = Math.round(horas / 24);
-  return t("sincronizacao.haDias", { n: dias });
-}
+import { formatarRelativo } from "../../lib/tempo";
 
 export default function SincronizacaoDrive({
   conectado,

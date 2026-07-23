@@ -20,6 +20,8 @@
       "allow": ["$DOCUMENT/**", "$APPDATA/**"]
     },
     "dialog:default",
+    "dialog:allow-save",
+    "core:window:allow-set-fullscreen",
     "sql:default",
     "sql:allow-execute",
     "sql:allow-select",

@@ -4,7 +4,7 @@ import { mkdir, exists } from "@tauri-apps/plugin-fs";
 import { caminharArvore } from "./arvoreArquivos";
 import { abrirBancoProjeto } from "./db";
 import { NOME_BANCO } from "./paths";
-import { criarProjetoNoDisco } from "./projetos";
+import { criarProjetoNoDisco, excluirProjetoNoDisco } from "./projetos";
 
 const NOME_RAIZ_DRIVE = "The Inkbound";
 
@@ -296,4 +296,45 @@ export async function descobrirProjetosDrive(titulosLocaisExistentes) {
   }
 
   return novosProjetos;
+}
+
+// Detecta projetos que existem localmente e já foram sincronizados alguma
+// vez com o Drive (têm drive_pasta_id registrado em sincronizacao_projeto),
+// mas cuja pasta no Drive não existe mais — sinal de que foram excluídos por
+// outro dispositivo (via excluirProjetoDoDrive) ou manualmente pelo Drive
+// web. Espelha essa exclusão localmente. Projetos que nunca foram
+// sincronizados (sem drive_pasta_id) são ignorados — "sem pasta no Drive"
+// não significa "excluído" para eles, só significa "nunca subiu". Falha ao
+// verificar um projeto específico (rede, token expirado, etc.) faz esse
+// projeto ser pulado, nunca excluído — só uma confirmação explícita de que
+// a pasta não existe mais no Drive autoriza apagar dados locais.
+export async function removerProjetosExcluidosDoDrive(projetosLocais) {
+  const idsRemovidos = [];
+
+  for (const projeto of projetosLocais) {
+    const caminhoBanco = await join(projeto.caminho, NOME_BANCO);
+    if (!(await exists(caminhoBanco))) continue;
+
+    const db = await abrirBancoProjeto(caminhoBanco);
+    const linhas = await db.select(
+      "SELECT drive_pasta_id FROM sincronizacao_projeto WHERE id = 1",
+    );
+    const drivePastaId = linhas[0]?.drive_pasta_id;
+    if (!drivePastaId) continue;
+
+    let existe;
+    try {
+      existe = await invoke("drive_pasta_existe", { pastaId: drivePastaId });
+    } catch (erro) {
+      console.error(`Falha ao verificar no Drive se o projeto "${projeto.titulo}" ainda existe:`, erro);
+      continue;
+    }
+
+    if (!existe) {
+      await excluirProjetoNoDisco(projeto.caminho);
+      idsRemovidos.push(projeto.id);
+    }
+  }
+
+  return idsRemovidos;
 }

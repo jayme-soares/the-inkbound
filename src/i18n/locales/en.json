@@ -44,7 +44,6 @@
     "criar": "Create"
   },
   "contaGoogle": {
-    "cliqueDesconectar": "Click to disconnect",
     "conectadoAoDrive": "Connected to Drive",
     "conectando": "Connecting...",
     "conectarAoDrive": "Connect to Google Drive"
@@ -53,6 +52,7 @@
     "projetos": "Projects",
     "abaEscrita": "Writing",
     "abaFichas": "Sheets",
+    "abaExportar": "Export",
     "selecioneArquivo": "Select a file in the sidebar to start writing."
   },
   "sidebar": {
@@ -66,9 +66,15 @@
   "editor": {
     "carregando": "Loading...",
     "palavras": "words",
+    "caracteres": "characters",
     "salvando": "saving...",
     "preview": "Preview",
-    "focus": "Focus"
+    "focus": "Focus",
+    "negrito": "Bold",
+    "italico": "Italic",
+    "sublinhado": "Underline",
+    "quebraCena": "Scene break",
+    "textoPadrao": "text"
   },
   "fichas": {
     "personagens": "Characters",
@@ -99,5 +105,45 @@
     "haMinutos": "{{n}} min ago",
     "haHoras": "{{n}}h ago",
     "haDias": "{{n}}d ago"
+  },
+  "historico": {
+    "titulo": "Version history",
+    "salvarAgora": "Save current version",
+    "salvando": "Saving...",
+    "carregando": "Loading...",
+    "nenhumaVersao": "No versions saved yet.",
+    "manual": "manual",
+    "automatica": "automatic",
+    "restaurar": "Restore",
+    "restaurando": "Restoring..."
+  },
+  "exportar": {
+    "titulo": "Export manuscript",
+    "autor": "Author",
+    "contato": "Contact",
+    "carregando": "Loading chapters...",
+    "semCapitulos": "No .md files found in this project.",
+    "moverCima": "Move up",
+    "moverBaixo": "Move down",
+    "erro": "Failed to export",
+    "sucesso": "Exported successfully to {{caminho}}",
+    "exportando": "Exporting...",
+    "exportarPdf": "Export PDF",
+    "exportarDocx": "Export Word"
+  },
+  "configuracoes": {
+    "titulo": "Settings",
+    "telaCheia": "Start in fullscreen",
+    "conta": "Account",
+    "desconectar": "Disconnect",
+    "desconectado": "Not connected to Google Drive",
+    "atualizacoes": "Updates",
+    "verificando": "Checking...",
+    "verificar": "Check",
+    "atualizado": "You're on the latest version ({{versao}})",
+    "versaoAtual": "Version {{versao}}",
+    "novaVersao": "New version available: {{versao}}",
+    "erroVerificar": "Couldn't check right now",
+    "baixar": "Download update"
   }
 }

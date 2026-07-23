@@ -4,10 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useAppStore } from "../../store/useAppStore";
 import { statusLoginGoogle } from "../../lib/googleAuth";
-import { descobrirProjetosDrive } from "../../lib/driveSync";
+import { descobrirProjetosDrive, removerProjetosExcluidosDoDrive } from "../../lib/driveSync";
 import LogoMarca from "../LogoMarca";
 import ToggleTema from "../ToggleTema";
 import ToggleIdioma from "../ToggleIdioma";
+import Configuracoes from "../Configuracoes";
 import NewProjectModal from "./NewProjectModal";
 import ContaGoogle from "./ContaGoogle";
 
@@ -35,15 +36,20 @@ export default function Dashboard() {
 
     async function inicializar() {
       // O carregamento inicial já roda em App.jsx (por trás da tela de
-      // carregamento) — aqui só falta checar o Drive por projetos novos.
+      // carregamento) — aqui só falta reconciliar com o Drive: projetos
+      // novos (criados/sincronizados noutro dispositivo) e projetos que
+      // foram excluídos noutro dispositivo (e por isso precisam sumir daqui
+      // também, em vez de continuarem "reanimados" localmente).
       const conectado = await statusLoginGoogle().catch(() => false);
       if (!ativo || !conectado) return;
 
       setVerificandoDrive(true);
       try {
-        const titulosLocais = new Set(useAppStore.getState().projetos.map((p) => p.titulo));
+        const projetosAtuais = useAppStore.getState().projetos;
+        const titulosLocais = new Set(projetosAtuais.map((p) => p.titulo));
         const novosProjetos = await descobrirProjetosDrive(titulosLocais);
-        if (ativo && novosProjetos.length > 0) {
+        const idsRemovidos = await removerProjetosExcluidosDoDrive(projetosAtuais);
+        if (ativo && (novosProjetos.length > 0 || idsRemovidos.length > 0)) {
           await carregarProjetos();
         }
       } catch (e) {
@@ -83,6 +89,7 @@ export default function Dashboard() {
             <ContaGoogle />
             <ToggleIdioma />
             <ToggleTema />
+            <Configuracoes />
             <button
               onClick={() => setModalAberto(true)}
               className="flex items-center gap-2 rounded-lg bg-gold px-4 py-2 text-sm font-medium text-gold-fg transition-opacity hover:opacity-90"

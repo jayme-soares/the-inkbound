@@ -44,7 +44,6 @@
     "criar": "Criar"
   },
   "contaGoogle": {
-    "cliqueDesconectar": "Clique para desconectar",
     "conectadoAoDrive": "Conectado ao Drive",
     "conectando": "Conectando...",
     "conectarAoDrive": "Conectar ao Google Drive"
@@ -53,6 +52,7 @@
     "projetos": "Projetos",
     "abaEscrita": "Escrita",
     "abaFichas": "Fichas",
+    "abaExportar": "Exportar",
     "selecioneArquivo": "Selecione um arquivo na barra lateral para começar a escrever."
   },
   "sidebar": {
@@ -66,9 +66,15 @@
   "editor": {
     "carregando": "Carregando...",
     "palavras": "palavras",
+    "caracteres": "caracteres",
     "salvando": "salvando...",
     "preview": "Preview",
-    "focus": "Focus"
+    "focus": "Focus",
+    "negrito": "Negrito",
+    "italico": "Itálico",
+    "sublinhado": "Sublinhado",
+    "quebraCena": "Quebra de cena",
+    "textoPadrao": "texto"
   },
   "fichas": {
     "personagens": "Personagens",
@@ -99,5 +105,45 @@
     "haMinutos": "há {{n}} min",
     "haHoras": "há {{n}}h",
     "haDias": "há {{n}}d"
+  },
+  "historico": {
+    "titulo": "Histórico de versões",
+    "salvarAgora": "Salvar versão atual",
+    "salvando": "Salvando...",
+    "carregando": "Carregando...",
+    "nenhumaVersao": "Nenhuma versão salva ainda.",
+    "manual": "manual",
+    "automatica": "automática",
+    "restaurar": "Restaurar",
+    "restaurando": "Restaurando..."
+  },
+  "exportar": {
+    "titulo": "Exportar manuscrito",
+    "autor": "Autor",
+    "contato": "Contato",
+    "carregando": "Carregando capítulos...",
+    "semCapitulos": "Nenhum arquivo .md encontrado neste projeto.",
+    "moverCima": "Mover para cima",
+    "moverBaixo": "Mover para baixo",
+    "erro": "Falha ao exportar",
+    "sucesso": "Exportado com sucesso para {{caminho}}",
+    "exportando": "Exportando...",
+    "exportarPdf": "Exportar PDF",
+    "exportarDocx": "Exportar Word"
+  },
+  "configuracoes": {
+    "titulo": "Configurações",
+    "telaCheia": "Iniciar em tela cheia",
+    "conta": "Conta",
+    "desconectar": "Desconectar",
+    "desconectado": "Não conectado ao Google Drive",
+    "atualizacoes": "Atualizações",
+    "verificando": "Verificando...",
+    "verificar": "Verificar",
+    "atualizado": "Você está na versão mais recente ({{versao}})",
+    "versaoAtual": "Versão {{versao}}",
+    "novaVersao": "Nova versão disponível: {{versao}}",
+    "erroVerificar": "Não foi possível verificar agora",
+    "baixar": "Baixar atualização"
   }
 }

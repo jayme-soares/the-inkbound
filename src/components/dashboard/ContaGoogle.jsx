@@ -1,41 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Cloud, CloudOff } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { statusLoginGoogle, logoutGoogle, iniciarLoginGoogle } from "../../lib/googleAuth";
+import { useContaGoogleStore } from "../../store/useContaGoogleStore";
 
+// Só conecta por aqui — desconectar mora nas Configurações agora, de
+// propósito, pra evitar que um clique acidental neste botão do cabeçalho
+// derrube a conexão sem querer.
 export default function ContaGoogle() {
   const { t } = useTranslation();
-  const [conectado, setConectado] = useState(null);
-  const [carregando, setCarregando] = useState(false);
-  const [erro, setErro] = useState(null);
+  const conectado = useContaGoogleStore((s) => s.conectado);
+  const carregando = useContaGoogleStore((s) => s.carregando);
+  const erro = useContaGoogleStore((s) => s.erro);
+  const conectar = useContaGoogleStore((s) => s.conectar);
+  const verificarStatus = useContaGoogleStore((s) => s.verificarStatus);
 
   useEffect(() => {
-    statusLoginGoogle()
-      .then(setConectado)
-      .catch(() => setConectado(false));
-  }, []);
-
-  async function conectar() {
-    setCarregando(true);
-    setErro(null);
-    try {
-      await iniciarLoginGoogle();
-      setConectado(true);
-    } catch (e) {
-      setErro(e.message || String(e));
-    } finally {
-      setCarregando(false);
-    }
-  }
-
-  async function desconectar() {
-    try {
-      await logoutGoogle();
-      setConectado(false);
-    } catch (e) {
-      setErro(e.message || String(e));
-    }
-  }
+    verificarStatus();
+  }, [verificarStatus]);
 
   if (conectado === null) return null;
 
@@ -43,14 +24,10 @@ export default function ContaGoogle() {
     <div className="flex items-center gap-2 text-xs">
       {erro && <span className="max-w-xs truncate text-danger" title={erro}>{erro}</span>}
       {conectado ? (
-        <button
-          onClick={desconectar}
-          title={t("contaGoogle.cliqueDesconectar")}
-          className="flex items-center gap-1.5 text-ink-muted transition-colors hover:text-danger"
-        >
+        <span className="flex items-center gap-1.5 text-ink-muted">
           <Cloud size={14} className="text-gold" />
           {t("contaGoogle.conectadoAoDrive")}
-        </button>
+        </span>
       ) : (
         <button
           onClick={conectar}

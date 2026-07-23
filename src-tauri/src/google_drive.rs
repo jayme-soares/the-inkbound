@@ -194,6 +194,40 @@ pub async fn drive_listar_filhos(pasta_id: String) -> Result<Vec<EntradaDrive>, 
     Ok(entradas)
 }
 
+// Verifica se um arquivo/pasta ainda existe no Drive, distinguindo "não
+// existe mais" (404 confirmado — ex: excluído por outro dispositivo) de
+// qualquer outra falha (rede, autenticação, etc.). Essa distinção é
+// deliberada: quem chama este comando usa `false` para decidir excluir
+// dados locais, e uma falha transitória não pode ser confundida com uma
+// exclusão real.
+#[tauri::command]
+pub async fn drive_pasta_existe(pasta_id: String) -> Result<bool, String> {
+    let token = obter_access_token().await?;
+    let cliente = reqwest::Client::new();
+    let resposta = cliente
+        .get(format!("{ARQUIVOS_URL}/{pasta_id}"))
+        .bearer_auth(&token)
+        .query(&[("fields", "id,trashed")])
+        .send()
+        .await
+        .map_err(|e| e.to_string())?;
+
+    if resposta.status() == reqwest::StatusCode::NOT_FOUND {
+        return Ok(false);
+    }
+
+    if !resposta.status().is_success() {
+        return Err(format!(
+            "Falha ao verificar pasta no Drive: {}",
+            resposta.text().await.unwrap_or_default()
+        ));
+    }
+
+    let dados: serde_json::Value = resposta.json().await.map_err(|e| e.to_string())?;
+    let na_lixeira = dados.get("trashed").and_then(|v| v.as_bool()).unwrap_or(false);
+    Ok(!na_lixeira)
+}
+
 #[tauri::command]
 pub async fn drive_obter_metadados(file_id: String) -> Result<String, String> {
     let token = obter_access_token().await?;

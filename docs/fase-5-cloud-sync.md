@@ -146,6 +146,19 @@ Depois das correções de infraestrutura acima, o autor testou o fluxo completo 
 | Pasta do projeto aparece no Drive já na criação, sem precisar abrir o Workspace | Teste manual do autor | **Confirmado funcionando** |
 | Arquivos `.db-wal`/`.db-shm` somem da sidebar | Teste manual do autor | **Confirmado funcionando** |
 
+## Correção: exclusão noutro dispositivo não era refletida localmente (2026-07-22)
+
+**Bug reportado pelo autor:** excluiu um projeto pelo Inkbound instalado num segundo dispositivo (mesma conta do Drive), o que corretamente removeu a pasta do projeto no Drive (via `excluirProjetoDoDrive`, já existente desde a Slice B). Mas no primeiro dispositivo, o projeto continuou aparecendo no Dashboard normalmente, como se nada tivesse acontecido.
+
+**Causa raiz:** `descobrirProjetosDrive()` (rodada ao carregar o Dashboard, se conectado) só resolve a direção "existe no Drive mas não localmente" — baixa projetos novos. Não existia nenhum código cuidando da direção oposta: "existe localmente mas sumiu do Drive". Um projeto excluído por outro dispositivo nunca era removido do dispositivo que só o via localmente.
+
+**Correção:**
+- Novo comando Rust [`drive_pasta_existe`](../src-tauri/src/google_drive.rs) — verifica se uma pasta/arquivo ainda existe no Drive, distinguindo explicitamente um 404 confirmado (ou `trashed: true`) de qualquer outra falha (rede, token expirado, etc.). Essa distinção é deliberada: uma falha transitória nunca pode ser interpretada como "foi excluído", ou o app apagaria dados locais por engano numa simples queda de conexão.
+- Nova função [`removerProjetosExcluidosDoDrive`](../src/lib/driveSync.js) — para cada projeto local que já tem um `drive_pasta_id` registrado (ou seja, já foi sincronizado alguma vez), verifica se a pasta ainda existe no Drive. Se não existir mais, exclui o projeto localmente também. Projetos que nunca foram sincronizados (sem `drive_pasta_id`) são ignorados — "sem pasta no Drive" não significa "excluído" para eles, só significa "nunca subiu". Falha ao verificar um projeto específico faz esse projeto ser pulado (mantido), nunca excluído.
+- [`Dashboard.jsx`](../src/components/dashboard/Dashboard.jsx) agora chama essa função junto de `descobrirProjetosDrive` na mesma verificação que já rodava ao carregar (se conectado ao Drive), e recarrega a lista de projetos se qualquer uma das duas resultar em mudança.
+
+**Fora do escopo desta correção:** o caso de excluir um projeto noutro dispositivo enquanto ele está *aberto no Workspace* em outro. A sincronização dentro do Workspace (`sincronizarProjeto`) não verifica se a pasta-raiz do próprio projeto ainda existe — hoje ela recriaria a pasta no Drive (por nome) e reenviaria tudo, tratando como se fosse um projeto novo. Esse é um caso mais raro (edição simultânea ativa nos dois dispositivos) e não foi o bug reportado; fica registrado como limitação conhecida, não como pendência.
+
 ## Pendências conhecidas (fora do escopo desta entrega)
 
 - Sincronização do `inkbound.db` em si (fichas de personagens/localidades) — continua deliberadamente fora, pelo mesmo motivo de sempre: é um arquivo binário/SQLite, arriscado de sincronizar sem um design próprio para lidar com conexões abertas e merge.

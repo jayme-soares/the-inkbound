@@ -28,6 +28,8 @@ export async function listarProjetos() {
       id: linha.id,
       titulo: linha.titulo,
       genero: linha.genero,
+      autor: linha.autor,
+      contato: linha.contato,
       dataCriacao: linha.data_criacao,
       contagemPalavras: linha.contagem_palavras,
       caminho: caminhoProjeto,
@@ -62,6 +64,8 @@ export async function criarProjetoNoDisco({ titulo, genero }) {
       id,
       titulo,
       genero,
+      autor: null,
+      contato: null,
       dataCriacao,
       contagemPalavras: 0,
       caminho: caminhoProjeto,
@@ -80,4 +84,17 @@ export async function excluirProjetoNoDisco(caminhoProjeto) {
     await fecharBancoProjeto(caminhoBanco);
   }
   await remove(caminhoProjeto, { recursive: true });
+}
+
+// Usada pela tela de exportação (folha de rosto do manuscrito), que é onde
+// esses dois campos passam a ser editáveis — não há uma tela de
+// "configurações do projeto" separada, e criar uma só para isto seria
+// prematuro.
+export async function atualizarAutorContato(caminhoProjeto, { autor, contato }) {
+  const caminhoBanco = await join(caminhoProjeto, NOME_BANCO);
+  const db = await abrirBancoProjeto(caminhoBanco);
+  await db.execute("UPDATE projeto SET autor = $1, contato = $2", [
+    autor || null,
+    contato || null,
+  ]);
 }

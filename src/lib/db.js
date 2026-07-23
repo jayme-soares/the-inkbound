@@ -5,6 +5,8 @@ const SCHEMA = [
     id TEXT PRIMARY KEY,
     titulo TEXT NOT NULL,
     genero TEXT,
+    autor TEXT,
+    contato TEXT,
     data_criacao TEXT NOT NULL,
     contagem_palavras INTEGER NOT NULL DEFAULT 0
   )`,
@@ -34,7 +36,35 @@ const SCHEMA = [
     hash_local_ultimo_sync TEXT,
     sincronizado_em TEXT NOT NULL
   )`,
+  `CREATE TABLE IF NOT EXISTS versoes_documento (
+    id TEXT PRIMARY KEY,
+    caminho_relativo TEXT NOT NULL,
+    conteudo TEXT NOT NULL,
+    palavras INTEGER NOT NULL,
+    tipo TEXT NOT NULL,
+    criado_em TEXT NOT NULL
+  )`,
+  `CREATE INDEX IF NOT EXISTS idx_versoes_caminho ON versoes_documento(caminho_relativo)`,
 ];
+
+// Colunas adicionadas a tabelas já existentes depois do lançamento inicial.
+// O CREATE TABLE IF NOT EXISTS acima só cobre bancos novos — bancos de
+// projetos criados antes desta mudança continuam sem a coluna até rodarmos
+// isto. SQLite não tem "ADD COLUMN IF NOT EXISTS" portátil, então checamos
+// via PRAGMA table_info antes de tentar adicionar.
+const MIGRACOES_COLUNA = [
+  { tabela: "projeto", coluna: "autor", ddl: "ALTER TABLE projeto ADD COLUMN autor TEXT" },
+  { tabela: "projeto", coluna: "contato", ddl: "ALTER TABLE projeto ADD COLUMN contato TEXT" },
+];
+
+async function aplicarMigracoesColuna(db) {
+  for (const { tabela, coluna, ddl } of MIGRACOES_COLUNA) {
+    const colunas = await db.select(`PRAGMA table_info(${tabela})`);
+    if (!colunas.some((c) => c.name === coluna)) {
+      await db.execute(ddl);
+    }
+  }
+}
 
 // tauri-plugin-sql sempre abre uma conexão NOVA a cada Database.load() e
 // sobrescreve a entrada anterior no mapa interno (por caminho) — ele nunca
@@ -65,6 +95,7 @@ async function criarConexao(caminhoBanco) {
   for (const stmt of SCHEMA) {
     await db.execute(stmt);
   }
+  await aplicarMigracoesColuna(db);
   return db;
 }
 

@@ -1,4 +1,5 @@
 mod credential_store;
+mod exportacao;
 mod google_auth;
 mod google_drive;
 
@@ -17,10 +18,13 @@ pub fn run() {
             google_drive::drive_buscar_arquivo,
             google_drive::drive_listar_filhos,
             google_drive::drive_obter_metadados,
+            google_drive::drive_pasta_existe,
             google_drive::drive_enviar_arquivo,
             google_drive::drive_baixar_arquivo,
             google_drive::drive_excluir_arquivo,
             google_drive::hash_arquivo_local,
+            exportacao::exportar_manuscrito_docx,
+            exportacao::exportar_manuscrito_pdf,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

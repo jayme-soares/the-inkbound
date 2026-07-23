@@ -9,6 +9,10 @@ export function contarPalavras(texto) {
   return trimado.split(/\s+/).length;
 }
 
+export function contarCaracteres(texto) {
+  return texto.length;
+}
+
 async function somarPalavrasDaPasta(caminhoPasta) {
   const entradas = await readDir(caminhoPasta);
   let total = 0;

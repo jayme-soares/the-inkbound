@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { ArrowLeft, FileText, PenLine, Users } from "lucide-react";
+import { ArrowLeft, Download, FileText, PenLine, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useAppStore } from "../../store/useAppStore";
 import { recalcularContagemProjeto } from "../../lib/palavras";
 import { useSincronizacaoDrive } from "../../hooks/useSincronizacaoDrive";
 import ToggleTema from "../ToggleTema";
 import ToggleIdioma from "../ToggleIdioma";
+import Configuracoes from "../Configuracoes";
 import Sidebar from "./Sidebar";
 import Editor from "./Editor";
 import Fichas from "./Fichas";
+import ExportarManuscrito from "./ExportarManuscrito";
 import SincronizacaoDrive from "./SincronizacaoDrive";
 
 export default function Workspace() {
@@ -95,17 +97,32 @@ export default function Workspace() {
                   <Users size={14} />
                   {t("workspace.abaFichas")}
                 </button>
+                <button
+                  onClick={() => setAba("exportar")}
+                  className={`flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs transition-colors ${
+                    aba === "exportar"
+                      ? "bg-hover text-ink"
+                      : "text-ink-muted hover:text-ink"
+                  }`}
+                >
+                  <Download size={14} />
+                  {t("workspace.abaExportar")}
+                </button>
               </div>
               <ToggleIdioma />
               <ToggleTema />
+              <Configuracoes />
             </div>
           </header>
         )}
 
         {aba === "fichas" ? (
           <Fichas caminhoProjeto={projetoAtivo.caminho} />
+        ) : aba === "exportar" ? (
+          <ExportarManuscrito projeto={projetoAtivo} />
         ) : arquivoAtivo ? (
           <Editor
+            projeto={projetoAtivo}
             caminhoArquivo={arquivoAtivo}
             onSalvo={aoSalvarDocumento}
             focusMode={focusMode}
